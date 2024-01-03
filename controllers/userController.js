@@ -11,13 +11,13 @@ const createToken = (_id)=>{   //_id will be the part of payload of jwt
 const loginUser = async (req, res) => {
 
     const {email, password} = req.body
-
+    console.log(req.body)
     try{
         const user= await User.login(email, password)
     
         //create a token for logged in user
         const token = createToken(user._id)
-    
+        
         res.status(200).json({email, token})
         
     } catch(error) {

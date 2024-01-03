@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express= require('express')
 const mongoose= require('mongoose')
+const cors = require('cors')
+
 const workoutRoutes=require('./routes/workouts')
 const userRoutes = require('./routes/user')
 const statsRoutes = require('./routes/stats')
@@ -9,6 +11,7 @@ const statsRoutes = require('./routes/stats')
 const app= express()
 
 //middleware--> run on every request
+app.use(cors());
 app.use(express.json()) // to read json data on all post request
 app.use((req,res,next) => {
     console.log(req.method, req.path)
@@ -31,7 +34,7 @@ mongoose.connect(process.env.MONGO_URI) //async takes some time and returns prom
     .then(()=> {
         console.log("Connected to DB")
         //listen for requests 
-        app.listen(process.env.PORT,() => {
+        app.listen(process.env.PORT || 4000 ,() => {
             console.log("Listening on PORT", process.env.PORT)
         })
     })
